@@ -1,11 +1,15 @@
 const form = document.querySelector('form#novoItem');
+const lista = document.querySelector('.lista');
 
 form.addEventListener('submit', (evento) => {
     evento.preventDefault(); //bloqueia o evento padrão 
     console.log(evento);
-
-    console.log(evento.target.elements['nome'].value);
-    console.log(evento.target.elements['quantidade'].value)
+    criaElemento(evento.target.elements['nome'].value, evento.target.elements['quantidade'].value);
 })
 
-//6:05 primeiro video
+function criaElemento(nome, quantidade){
+    const novoElemento = document.createElement('li');
+    novoElemento.classList.add('item');
+    novoElemento.innerHTML = `<strong>${quantidade}</strong>${nome}`;
+    lista.appendChild(novoElemento);
+}
