@@ -1,6 +1,12 @@
 const form = document.querySelector('form#novoItem');
 const lista = document.querySelector('.lista');
-const itens  = [];
+const itens  = JSON.parse(localStorage.getItem('itens')) || [];
+//JSON.parse transforma o que foi pego em array
+
+
+itens.forEach((elemento) => {
+    console.log(elemento.nome, elemento.quantidade);
+})
 
 form.addEventListener('submit', (evento) => {
     evento.preventDefault(); //bloqueia o evento padrão ;
@@ -27,9 +33,6 @@ function criaElemento(nome, quantidade){
 
     itens.push(itemAtual);
 
-    localStorage.setItem('item', JSON.stringify(itens));
-
-    let dados = localStorage.getItem('item');
-    console.log(dados);
+    localStorage.setItem('itens', JSON.stringify(itens));
 }
 
