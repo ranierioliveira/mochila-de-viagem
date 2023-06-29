@@ -5,7 +5,7 @@ const itens  = JSON.parse(localStorage.getItem('itens')) || [];
 
 
 itens.forEach((elemento) => {
-    console.log(elemento.nome, elemento.quantidade);
+    criaElemento(elemento);
 })
 
 form.addEventListener('submit', (evento) => {
@@ -14,25 +14,24 @@ form.addEventListener('submit', (evento) => {
     const nome = evento.target.elements['nome'];
     const quantidade = evento.target.elements['quantidade'];
 
-    criaElemento(nome.value, quantidade.value);
+    const itemAtual = {
+        'nome': nome.value,
+        'quantidade': quantidade.value
+    }
+
+    criaElemento(itemAtual);
+
+    itens.push(itemAtual);
+
+    localStorage.setItem('itens', JSON.stringify(itens));
 
     nome.value = '';
     quantidade.value = '';
 });
 
-function criaElemento(nome, quantidade){
+function criaElemento(item){
     const novoElemento = document.createElement('li');
     novoElemento.classList.add('item');
-    novoElemento.innerHTML = `<strong>${quantidade}</strong>${nome}`;
+    novoElemento.innerHTML = `<strong>${item['quantidade']}</strong>${item['nome']}`;
     lista.appendChild(novoElemento);
-
-    const itemAtual = {
-        'nome': nome,
-        'quantidade': quantidade
-    }
-
-    itens.push(itemAtual);
-
-    localStorage.setItem('itens', JSON.stringify(itens));
 }
-
