@@ -14,14 +14,27 @@ form.addEventListener('submit', (evento) => {
     const nome = evento.target.elements['nome'];
     const quantidade = evento.target.elements['quantidade'];
 
+    //Confere se o elemento adicionado já existe
+    const existe = itens.find(elemento => elemento.nome === nome.value);
+    console.log(existe)
+
     const itemAtual = {
         'nome': nome.value,
         'quantidade': quantidade.value
     }
 
-    criaElemento(itemAtual);
+    if(existe){
+        itemAtual.id = existe.id;
+        console.log(existe.id);
 
-    itens.push(itemAtual);
+        atualizaElemento(itemAtual);
+    } else {
+        itemAtual.id = itens.length;
+        criaElemento(itemAtual);
+        itens.push(itemAtual);
+    }
+
+    
 
     localStorage.setItem('itens', JSON.stringify(itens));
 
@@ -33,5 +46,10 @@ function criaElemento(item){
     const novoElemento = document.createElement('li');
     novoElemento.classList.add('item');
     novoElemento.innerHTML = `<strong>${item['quantidade']}</strong>${item['nome']}`;
+    novoElemento.dataset.id = 
     lista.appendChild(novoElemento);
+}
+
+function atualizaElemento(){
+    
 }
