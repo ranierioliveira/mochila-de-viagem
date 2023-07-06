@@ -16,7 +16,7 @@ form.addEventListener('submit', (evento) => {
 
     //Confere se o elemento adicionado já existe
     const existe = itens.find(elemento => elemento.nome === nome.value);
-    console.log(existe)
+    console.log(existe);
 
     const itemAtual = {
         'nome': nome.value,
@@ -25,8 +25,6 @@ form.addEventListener('submit', (evento) => {
 
     if(existe){
         itemAtual.id = existe.id;
-        console.log(existe.id);
-
         atualizaElemento(itemAtual);
     } else {
         itemAtual.id = itens.length;
@@ -43,13 +41,14 @@ form.addEventListener('submit', (evento) => {
 });
 
 function criaElemento(item){
+    console.log(item);
     const novoElemento = document.createElement('li');
     novoElemento.classList.add('item');
     novoElemento.innerHTML = `<strong>${item['quantidade']}</strong>${item['nome']}`;
-    novoElemento.dataset.id = 
+    novoElemento.dataset.id = item.id;
     lista.appendChild(novoElemento);
 }
 
-function atualizaElemento(){
-    
+function atualizaElemento(item){
+    console.log(document.querySelector("[data-id='" + item.id+ "']"));
 }
