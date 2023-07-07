@@ -41,14 +41,19 @@ form.addEventListener('submit', (evento) => {
 });
 
 function criaElemento(item){
-    console.log(item);
     const novoElemento = document.createElement('li');
     novoElemento.classList.add('item');
-    novoElemento.innerHTML = `<strong>${item['quantidade']}</strong>${item['nome']}`;
-    novoElemento.dataset.id = item.id;
+
+    const numeroItem = document.createElement('strong');
+    numeroItem.innerHTML = item.quantidade;
+    numeroItem.dataset.id = item.id;
+    novoElemento.appendChild(numeroItem);
+
+    novoElemento.innerHTML += item.nome;
+
     lista.appendChild(novoElemento);
 }
 
 function atualizaElemento(item){
-    console.log(document.querySelector("[data-id='" + item.id+ "']"));
+    document.querySelector("[data-id='" + item.id + "']").innerHTML = item.quantidade;
 }
