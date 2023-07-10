@@ -26,6 +26,8 @@ form.addEventListener('submit', (evento) => {
     if(existe){
         itemAtual.id = existe.id;
         atualizaElemento(itemAtual);
+
+        itens[existe.id] = itemAtual;
     } else {
         itemAtual.id = itens.length;
         criaElemento(itemAtual);
@@ -51,9 +53,26 @@ function criaElemento(item){
 
     novoElemento.innerHTML += item.nome;
 
+    novoElemento.appendChild(botaoDeleta())
+
     lista.appendChild(novoElemento);
 }
 
 function atualizaElemento(item){
     document.querySelector("[data-id='" + item.id + "']").innerHTML = item.quantidade;
+}
+
+function botaoDeleta(){
+    const elementoBotao = document.createElement('button');
+    elementoBotao.innerText = 'X';
+
+    elementoBotao.addEventListener('click', function() {
+        deletaElemento(this);
+    });
+
+    return elementoBotao;
+}
+
+function deletaElemento(botao){
+    botao.parentNode.remove();  
 }
