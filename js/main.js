@@ -27,9 +27,10 @@ form.addEventListener('submit', (evento) => {
         itemAtual.id = existe.id;
         atualizaElemento(itemAtual);
 
-        itens[existe.id] = itemAtual;
+        itens[itens.findIndex(elemento => elemento.id === existe.id)] = itemAtual;
     } else {
-        itemAtual.id = itens.length;
+        //Confere se não está vazio o array (operador ternário)
+        itemAtual.id = itens[itens.length - 1] ? (itens[itens.length - 1].id) + 1: 0;
         criaElemento(itemAtual);
         itens.push(itemAtual);
     }
@@ -53,7 +54,7 @@ function criaElemento(item){
 
     novoElemento.innerHTML += item.nome;
 
-    novoElemento.appendChild(botaoDeleta())
+    novoElemento.appendChild(botaoDeleta(item.id))
 
     lista.appendChild(novoElemento);
 }
@@ -62,17 +63,22 @@ function atualizaElemento(item){
     document.querySelector("[data-id='" + item.id + "']").innerHTML = item.quantidade;
 }
 
-function botaoDeleta(){
+function botaoDeleta(id){
     const elementoBotao = document.createElement('button');
     elementoBotao.innerText = 'X';
 
     elementoBotao.addEventListener('click', function() {
-        deletaElemento(this);
+        deletaElemento(this.parentNode, id);
     });
 
     return elementoBotao;
 }
 
-function deletaElemento(botao){
-    botao.parentNode.remove();  
+function deletaElemento(botao, id){
+    botao.remove();  
+
+    itens.splice(itens.findIndex(elemento => elemento.id === id), 1);
+    console.log(itens);
+
+    localStorage.setItem('itens', JSON.stringify(itens));
 }
